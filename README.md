@@ -1,4 +1,4 @@
-# Instaclustr TechLauncher Team Code Repo
+# Instaclustr TechLauncher Team Repo
 ## Overview
 At Instaclustr, we provide a managed service which delivers Kafka, Cassandra and Elasticsearch as-a-service to some of the biggest names in Tech. We manage enterprise scale solutions which are relied upon by critical business services.
 We have hundreds of clusters, and over 3000 instances (nodes) running at any time. As well as automated systems for provisioning and configuring clusters, a component of our management system is a comprehensive automated monitoring system which alerts our support staff of any potential issues. Our monitoring system is itself a large, distributed system comprising over 60 servers (some up to 36 CPU's, 72 Gb RAM, 2TB Storage). It receives 450,00 events/metrics per second, with periodic peaks up to 200% of average load.
