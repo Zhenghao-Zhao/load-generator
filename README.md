@@ -11,3 +11,12 @@ The largest challenges of the project will be the orchestration of the multiple 
 Ideally, the system will be able to generate different metrics and load per simulated instance, taking input and direction from user input into the system. This will help us simulate the different load different customers can produce on the system. You will also need to be able automatically collect the results collected while performance testing, so we are able to evaluate performance impacts of system improvements.
 
 More to come...
+
+
+## Team Members
+- Zhenghao Zhao (u5746425@anu.edu.au)
+- Ziwei (David) Liu (u6380075@anu.edu.au)
+- Utkarsh (u6018954@anu.edu.au)
+- Wei (Phillip) Xing (u5656487@anu.edu.au)
+- Yongchao (Laurence) Lyn (u6018954@anu.edu.au)
+- Yi Liu (u6641740@anu.edu.au)
