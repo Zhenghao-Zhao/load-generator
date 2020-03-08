@@ -20,14 +20,14 @@ This project uses a simplified version of the [Gitflow Workflow](https://www.atl
     - Example bugfix branch name: `bugfix/26-menu-glitches`
 3. Work on feature and commit/push to this branch. 
     - Keep in mind that other developers may merge changes into `develop` while you are developing, remember to `git merge develop` if necessary and appropriate.
-4. Once work is complete, open a pull request (PR) from your branch to `develop` from GitHub. At least 1 other developer has to approve the PR.
+4. Once work is complete, open a pull request (PR) from your branch to `develop` from GitHub. At least 1 other developer has to approve the PR, and all reviewers assigned to the PR must approve before the PR can be merged.
     - Remember to link your PR to the corresponding issue on [ZenHub](https://app.zenhub.com/login).
 5. Once your branch is merged with `develop`, delete the branch.
 
 ### Release procedure
 1. The features to be included in the next release will be discussed in a team meeting.
 2. A release branch will be made wih the following naming convention: `release/RELEASE_NUMBER-release-feature-summary`.
-3. After any changes to the code on the branch has been made and verified, a PR will be made from the release branch to both `develop` and `master`. At least 2 developers have to approve the PR.
+3. After any changes to the code on the branch has been made and verified, a PR will be made from the release branch to both `develop` and `master`. At least 2 developers have to approve the PR, and all reviewers assigned to the PR must approve before the PR can be merged.
 4. The release branch will be deleted after it has been merged.
 
 # ZenHub
