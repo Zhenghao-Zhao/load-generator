@@ -1,7 +1,7 @@
 
 # Instaload
 ## Quick Access
-* [Issue Board](https://github.com/Zhenghao-Zhao/Instaclustr-TL#workspaces/project-board-5e5efa7668d1b55158247a50/board?repos=244576663)
+* [Issue Board](https://github.com/Zhenghao-Zhao/Instaload#workspaces/project-board-5e5efa7668d1b55158247a50/board?repos=244576663)
 * [Documentation](https://drive.google.com/drive/folders/1xwgVBDAqbR-0H-oAxnSYZ9wgkiJFF5hS)
 * [Master (*default*)](https://github.com/Zhenghao-Zhao/Instaload/tree/master)
 
