@@ -5,6 +5,7 @@ import bernhard
 
 def receiving():
     # establish connections to receive messages from server
+
     connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='localhost', port=5672))
     channel = connection.channel()
@@ -20,10 +21,11 @@ def receiving():
 
     def callback(ch, method, properties, body):
         # callback when a message/body is received
-        print(" [x] %r" % body)
+        print(" [x] received %r" % body)
 
         # send requests to riemann
         c = bernhard.Client(host='localhost', port=5555)
+        # convert back to dict before send through
         c.send(json.loads(body))
 
     channel.basic_consume(
