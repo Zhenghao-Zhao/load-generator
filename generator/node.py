@@ -15,12 +15,12 @@ def load():
         } for m in metrics]
 
     # send a list of maps
+    # todo: send those maps concurrently to established channels
     for m in dlist:
         send(json.dumps(m))
-    # return dlist
 
 def send(message):
-    # establish connection message with RMQ server, and send message
+    # establish connection with RMQ server, and send the message
     connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='localhost', port=5672))
     channel = connection.channel()

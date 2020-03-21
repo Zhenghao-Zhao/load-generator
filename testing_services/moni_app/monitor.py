@@ -3,7 +3,8 @@ import json
 import pika
 import bernhard
 
-def receive():
+def receiving():
+    # establish connections to receive messages from server
     connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='localhost', port=5672))
     channel = connection.channel()
@@ -18,9 +19,10 @@ def receive():
     print(' [*] Waiting for logs. To exit press CTRL+C')
 
     def callback(ch, method, properties, body):
+        # callback when a message/body is received
         print(" [x] %r" % body)
 
-        # send http requests to riemann
+        # send requests to riemann
         c = bernhard.Client(host='localhost', port=5555)
         c.send(json.loads(body))
 
@@ -30,4 +32,4 @@ def receive():
     channel.start_consuming()
 
 if __name__ == '__main__':
-    receive()
+    receiving()
