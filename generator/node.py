@@ -4,10 +4,10 @@ import json
 import pika
 
 def load():
-    # generate a list of maps
-    metrics = ['availableBlocks', 'freeInodes', 'availableInodes', 'freeBlocks', 'blockSize', 'totoalInodes', 'totalBlocks']
+    # generate a list of maps and send to riemann
 
-    dlist = [{
+    metrics = ['availableBlocks', 'freeInodes', 'availableInodes', 'freeBlocks', 'blockSize', 'totoalInodes', 'totalBlocks']
+    map_list = [{
             'host': 'myhost.foobar.com',
             'service': m,
             'tags': ["sla|running"],
@@ -16,7 +16,8 @@ def load():
 
     # send a list of maps
     # todo: send those maps concurrently to established channels
-    for m in dlist:
+    for m in map_list:
+        # convert a map to string and send through
         send(json.dumps(m))
 
 def send(message):
