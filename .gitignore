@@ -233,3 +233,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Jar files
+*.jar
+
+# alternative log files
+*.log.*
