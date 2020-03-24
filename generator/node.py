@@ -1,20 +1,22 @@
 from random import random
-import time, threading
+import threading
 
 
 import json
 import pika
 
 def load():
-    # generate a list of maps and send to riemann
+    # generate a list of maps and send it to riemann
 
     metrics = ['availableBlocks', 'freeInodes', 'availableInodes', 'freeBlocks', 'blockSize', 'totoalInodes', 'totalBlocks']
-    map_list = [{
+    map_list = [
+        {
             'host': 'myhost.foobar.com',
             'service': m,
             'tags': ["sla|running"],
             'metric': random(),
-        } for m in metrics]
+        } for m in metrics
+    ]
 
     # send a list of maps
     # todo: send those maps concurrently to established channels
