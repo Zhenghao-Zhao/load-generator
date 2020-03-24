@@ -1,4 +1,6 @@
 from random import random
+import time, threading
+
 
 import json
 import pika
@@ -19,6 +21,9 @@ def load():
     for m in map_list:
         # convert a map to string and send through
         send(json.dumps(m))
+
+    threading.Timer(20, load).start()
+
 
 def send(message):
     # establish connection with RMQ server, and send the message
