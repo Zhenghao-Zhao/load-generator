@@ -6,7 +6,7 @@ import json
 import pika
 
 def load():
-    # generate a list of maps and send it to riemann
+    """generate a list of maps and send it to riemann"""
 
     metrics = ['availableBlocks', 'freeInodes', 'availableInodes', 'freeBlocks', 'blockSize', 'totoalInodes', 'totalBlocks']
     map_list = [
@@ -24,11 +24,13 @@ def load():
         # convert a map to string and send through
         send(json.dumps(m))
 
+    # run load every 20s
     threading.Timer(20, load).start()
 
 
 def send(message):
-    # establish connection with RMQ server, and send the message
+    """establish connection with RMQ server, and send the message"""
+
     connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='localhost', port=5672))
     channel = connection.channel()
