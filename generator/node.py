@@ -1,14 +1,17 @@
 from random import random
-import threading
-
-
 import json
 import pika
 
+
 def load():
     """generate a list of maps and send it to riemann"""
+    # establish connection with rmq
+    connection = pika.BlockingConnection(
+        pika.ConnectionParameters(host='localhost', port=5672))
+    channel = connection.channel()
 
-    metrics = ['availableBlocks', 'freeInodes', 'availableInodes', 'freeBlocks', 'blockSize', 'totoalInodes', 'totalBlocks']
+    metrics = ['availableBlocks', 'freeInodes', 'availableInodes', 'freeBlocks', 'blockSize', 'totoalInodes',
+               'totalBlocks']
     map_list = [
         {
             'host': 'myhost.foobar.com',
@@ -19,28 +22,17 @@ def load():
     ]
 
     # send a list of maps
-    # todo: send those maps concurrently to established channels
-    for m in map_list:
-        # convert a map to string and send through
-        send(json.dumps(m))
+    send(map_list, channel)
+    connection.close()
 
-    # run load every 20s
-    threading.Timer(20, load).start()
-
-
-def send(message):
+def send(map_list, channel):
     """establish connection with RMQ server, and send the message"""
-
-    connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host='localhost', port=5672))
-    channel = connection.channel()
 
     channel.exchange_declare(exchange='logs', exchange_type='fanout')
 
-    channel.basic_publish(exchange='logs', routing_key='', body=message)
-    print(" [x] Sent %r" % message)
-    connection.close()
+    for message in map_list:
+        channel.basic_publish(exchange='logs', routing_key='', body=json.dumps(message))
+        print(" [x] Sent %r" % message)
 
 if __name__ == '__main__':
-    load()
-
+    print("Please start from main script")
