@@ -1,7 +1,7 @@
 import threading
 import sched
 import time
-from generator.node import load
+from load_generator.node import load
 
 
 def run(node_num=1):
@@ -17,7 +17,7 @@ def add_load():
 
     s = sched.scheduler(time.time, time.sleep)
     while True:
-        s.enter(20, 1, start_thread)
+        s.enter(5, 1, start_thread)
         s.run()
 
 
@@ -26,10 +26,9 @@ def start_thread():
 
     try:
         threading.Thread(target=load).start()
-        print("thread stops")
     except:
         print("Error: unable to start thread")
 
 
 if __name__ == "__main__":
-    run()
+    run(3)
