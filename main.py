@@ -17,7 +17,7 @@ def add_load():
 
     s = sched.scheduler(time.time, time.sleep)
     while True:
-        s.enter(5, 1, start_thread)
+        s.enter(20, 1, start_thread)
         s.run()
 
 
@@ -31,4 +31,4 @@ def start_thread():
 
 
 if __name__ == "__main__":
-    run(3)
+    run()
