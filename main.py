@@ -15,6 +15,9 @@ def run(node_num=1):
 def add_load():
     """add load thread every 20s"""
 
+    # Fire a thread immediately for the first time
+    start_thread()
+
     s = sched.scheduler(time.time, time.sleep)
     while True:
         s.enter(20, 1, start_thread)
@@ -23,6 +26,8 @@ def add_load():
 
 def start_thread():
     """start a load thread"""
+
+    print(threading.active_count(), 'threads running...')
 
     try:
         threading.Thread(target=load).start()
