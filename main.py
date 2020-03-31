@@ -27,8 +27,6 @@ def add_load():
 def start_thread():
     """start a load thread"""
 
-    print(threading.active_count(), 'threads running...')
-
     try:
         threading.Thread(target=load).start()
     except:
