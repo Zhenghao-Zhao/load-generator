@@ -1,0 +1,6 @@
+bernhard==0.2.6
+certifi==2019.11.28
+pika==1.1.0
+protobuf==3.11.3
+six==1.14.0
+wincertstore==0.2
