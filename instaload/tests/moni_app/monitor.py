@@ -21,6 +21,7 @@ def receiving():
 
     def callback(ch, method, properties, body):
         """callback when a message/body is received"""
+        print(properties)
 
         print(" [x] received %r" % body)
         # send requests to riemann
