@@ -2,6 +2,7 @@
 import json
 import pika
 import bernhard
+import snappy
 
 def receiving():
     """establish connections to receive messages from server"""
@@ -21,13 +22,13 @@ def receiving():
 
     def callback(ch, method, properties, body):
         """callback when a message/body is received"""
-        print(properties)
 
         print(" [x] received %r" % body)
         # send requests to riemann
         c = bernhard.Client(host='localhost', port=5555)
         # convert back to dict before send through
-        c.send(json.loads(body))
+        message = snappy.uncompress(body)
+        c.send(json.loads(message))
 
     channel.basic_consume(
         queue=queue_name, on_message_callback=callback, auto_ack=True)

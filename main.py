@@ -1,5 +1,11 @@
+"""
+The purpose of this file is to load data from external files, and pass
+them to respective class/method calls
+"""
+
 import configparser
 from instaload.LoadGenerator import LoadGenerator
+from instaload.RMQClient import RMQClient
 
 if __name__ == '__main__':
 
@@ -11,4 +17,4 @@ if __name__ == '__main__':
     config = configparser.ConfigParser()
     config.read('data/configs/config.cfg')
 
-    LoadGenerator(metrics=metrics, config=config).run()
+    LoadGenerator(metrics=metrics, client=RMQClient(config)).run()
