@@ -19,6 +19,7 @@ class LoadGenerator:
         self.client = client
         self.metrics = metrics
         self.node_num = node_num
+        self.period = 20
 
     def run(self):
 
@@ -34,7 +35,7 @@ class LoadGenerator:
 
         s = sched.scheduler(time.time, time.sleep)
         while True:
-            s.enter(20, 1, self.__start_load)
+            s.enter(self.period, 1, self.__start_load)
             s.run()
 
     def __start_load(self):

@@ -2,7 +2,7 @@
 This class separates rmq client from load generator itself,
 making the sub-systems more modular and easier to debug.
 
-This class creates a rabbitmq client from given config and credentials,
+This class creates a customized rabbitmq client from given config and credentials,
 it has send method which takes load and send to rmq server
 """
 
