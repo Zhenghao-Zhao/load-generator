@@ -1,6 +1,9 @@
 bernhard==0.2.6
 certifi==2019.11.28
+cffi==1.14.0
 pika==1.1.0
 protobuf==3.11.3
+pycparser==2.20
+python-snappy==0.5.4
 six==1.14.0
 wincertstore==0.2
