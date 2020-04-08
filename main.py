@@ -15,6 +15,6 @@ if __name__ == '__main__':
 
     # read config data
     config = configparser.ConfigParser()
-    config.read('data/configs/config.cfg')
+    config.read('instaload/data/configs/config.cfg')
 
     LoadGenerator(metrics=metrics, client=RMQClient(config)).run()
