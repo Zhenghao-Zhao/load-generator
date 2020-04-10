@@ -4,8 +4,8 @@ them to respective class/method calls
 """
 
 import configparser
-from instaload.src.LoadGenerator import LoadGenerator
-from instaload.src.RMQClient import RMQClient
+from src.LoadGenerator import LoadGenerator
+from src.RMQClient import RMQClient
 
 if __name__ == '__main__':
 
@@ -15,6 +15,10 @@ if __name__ == '__main__':
 
     # read config data
     config = configparser.ConfigParser()
-    config.read('instaload/data/configs/config.cfg')
+    config.read('data/configs/config.cfg')
 
-    LoadGenerator(metrics=metrics, client=RMQClient(config)).run()
+    # create custom RMQ client
+    client = RMQClient(config)
+
+    # create a LoadGenerator that generates and sends data to a custom RMQ client
+    LoadGenerator(metrics=metrics, client=client).run()
