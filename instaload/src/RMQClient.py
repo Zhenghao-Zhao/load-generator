@@ -19,7 +19,8 @@ class RMQClient:
         self.port = config['rmq']['port']
         self.credential = pika.PlainCredentials(username=config['rmq']['username'],
                                                 password=config['rmq']['password'])
-        self.properties = pika.BasicProperties(content_type='application/protobuf; proto=com.aphyr.riemann.Msg')
+        self.properties = pika.BasicProperties(content_type='application/protobuf; proto=com.aphyr.riemann.Msg',
+                                               content_encoding="snappy")
 
     def send(self, load):
         """establish connection with RMQ server, compress with snappy and send the message"""
