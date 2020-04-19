@@ -4,8 +4,8 @@ them to respective class/method calls
 """
 
 import configparser
-from src.LoadGenerator import LoadGenerator
-from src.RMQClient import RMQClient
+from src.load_generator import LoadGenerator
+from src.rmq_client import RMQClient
 
 if __name__ == '__main__':
 
