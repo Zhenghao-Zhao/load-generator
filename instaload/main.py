@@ -21,4 +21,4 @@ if __name__ == '__main__':
     client = RMQClient(config)
 
     # create a LoadGenerator that generates and sends data to a custom RMQ client
-    LoadGenerator(metrics=metrics, client=client).run()
+    LoadGenerator(metrics=metrics, client=client, node_num=1).run()

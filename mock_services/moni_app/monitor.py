@@ -1,4 +1,7 @@
-#!/usr/bin/env python
+"""
+Deprecated: now use a java version instead due to better integration with Instaclusr env
+"""
+
 import json
 import pika
 import bernhard
@@ -26,9 +29,10 @@ def receiving():
         print(" [x] received %r" % body)
         # send requests to riemann
         c = bernhard.Client(host='localhost', port=5555)
-        # convert back to dict before send through
-        message = snappy.uncompress(body)
-        c.send(json.loads(message))
+        # convert back to original form
+        # message = snappy.uncompress(body)
+
+        # c.send(json.loads(message))
 
     channel.basic_consume(
         queue=queue_name, on_message_callback=callback, auto_ack=True)

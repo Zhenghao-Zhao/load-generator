@@ -8,7 +8,7 @@ This class generates load and makes call to rmq client send method to send data 
 import sched
 import threading
 import time
-
+import proto_pb2
 from random import random
 
 
@@ -52,13 +52,12 @@ class LoadGenerator:
     def __gen_load(self):
         """generate a list of maps and send it to riemann"""
 
-        map_list = [
-            {
-                'host': 'myhost.foobar.com',
-                'service': m,
-                'tags': ["sla|running"],
-                'metric': random(),
-            } for m in self.metrics
-        ]
+        msg = proto_pb2.Msg()
+        for m in self.metrics:
+            event = msg.events.add()
+            event.host = 'myhost.foobar.com'
+            event.service = m
+            event.tags.extend(["sla|running"])
+            event.metric_f = random()
 
-        return map_list
+        return msg
