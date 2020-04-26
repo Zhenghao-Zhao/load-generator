@@ -8,7 +8,7 @@ This class generates load and makes call to rmq client send method to send data 
 import sched
 import threading
 import time
-import proto_pb2
+from .protos_out import proto_pb2
 from random import random
 
 
@@ -16,6 +16,7 @@ class LoadGenerator:
 
     def __init__(self, metrics, client, node_num=1):
         """setup configs and messages"""
+
         self.client = client
         self.metrics = metrics
         self.node_num = node_num
