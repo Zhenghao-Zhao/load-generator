@@ -38,7 +38,7 @@ public class Recv {
     }
 
     public static void main(String[] argv) throws Exception {
-        Config cfg = new Config("instaload/data/configs/rmq.cfg");
+        Config cfg = new Config("mock_services/moni_app/configs/rmq.cfg");
 
         String HOSTNAME = getValueOrDefault(cfg.getProperty("host"), "localhost");
         String EXCHANGE_NAME = getValueOrDefault(cfg.getProperty("exchange"), "log");
