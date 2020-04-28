@@ -239,3 +239,6 @@ dist
 
 # alternative log files
 *.log.*
+
+# Python cfg
+.cfg

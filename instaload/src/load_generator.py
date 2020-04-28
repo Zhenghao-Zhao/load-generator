@@ -24,7 +24,7 @@ class LoadGenerator:
 
     def run(self):
 
-        # Create multiple threads that add load thread every 20s
+        # Create multiple threads that add a load thread every 20s
         for i in range(self.node_num):
             threading.Thread(target=self.__add_load).start()
 
@@ -45,6 +45,7 @@ class LoadGenerator:
         # generate load
         load = self.__gen_load()
 
+        # send load
         try:
             threading.Thread(target=self.client.send, args=(load,)).start()
         except:

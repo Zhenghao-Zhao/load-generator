@@ -1,5 +1,3 @@
-package rmq_receiver;
-
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -8,16 +6,43 @@ import io.riemann.riemann.Proto;
 import io.riemann.riemann.client.RiemannClient;
 import org.xerial.snappy.Snappy;
 
+import java.io.FileInputStream;
+import java.util.Properties;
+
 public class Recv {
 
+    public static class Config {
+
+        Properties properties;
+        public Config(String path) {
+            properties = new Properties();
+            try {
+                properties.load(new FileInputStream(path));
+            }catch(Exception eta){
+                eta.printStackTrace();
+            }
+        }
+
+        public String getProperty(String key) {
+
+            return this.properties.getProperty(key);
+        }
+    }
+
+    public static <T> T getValueOrDefault(T value, T defaultValue) {
+        return value == null ? defaultValue : value;
+    }
 
     public static void main(String[] argv) throws Exception {
+        Config cfg = new Config("src/main/configs/config.cfg");
+
+        String HOSTNAME = getValueOrDefault(cfg.getProperty("host"), "127.0.0.1");
+        String EXCHANGE_NAME = getValueOrDefault(cfg.getProperty("exchange"), "log");
+
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
+        factory.setHost(HOSTNAME);
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
-
-        String EXCHANGE_NAME = "logs";
 
         channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
 
@@ -38,10 +63,8 @@ public class Recv {
             RiemannClient c = RiemannClient.tcp("0.0.0.0", 5555);
             c.connect();
             c.sendMessage(msg).deref(5000, java.util.concurrent.TimeUnit.MILLISECONDS);
-
-            c.close();
-
             System.out.println(" [x] Received '" + msg + "'");
+            c.close();
         };
         channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> {
         });

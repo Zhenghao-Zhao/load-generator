@@ -1,3 +1,14 @@
+/*
+This file defines the protocol used between the sender and the receiver of the application. Its equivalent in Python
+generated using proto compiler protoc can be found in instaload\src\protos_out\proto_pb2.py.
+Read more here: https://developers.google.com/protocol-buffers/docs/pythontutorial#the-protocol-buffer-api
+
+A proto file is a developer file created in Google's Protocol Buffer format, a data serialization format used for
+exchanging data; specifies one or more "messages" as logical records, each of which contains name-value pairs
+(e.g., a Person message may have an ID, name, and address); designed as an alternative to XML for data exchange.
+Derived from here: https://fileinfo.com/extension/proto
+ */
+
 syntax = "proto2";
 
 // Deprecated; state was used by early versions of the protocol, but not any

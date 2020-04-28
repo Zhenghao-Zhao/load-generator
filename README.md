@@ -34,25 +34,31 @@ Yi Liu	 | u6641740@anu.edu.au | Developer |
 ## Installation
 
 ### Instaload 
-1. For *nix users, you need to download extra C libs. Follow instructions in https://stackoverflow.com/questions/11416024/error-installing-python-snappy-snappy-c-h-no-such-file-or-directory
-<br>You also need to install python-snappy as the binding after you have attained the c libs
-2. For Windows users, follow instructions in https://stackoverflow.com/questions/42979544/how-to-install-snappy-c-libraries-on-windows-10-for-use-with-python-snappy-in-an
-<br>Note: we use python 3.7
-3. Install libraries from requirements.txt (instaload\requirements.txt)
+Language: **Python 3.7**
 
-### Monitoring app (.java)
-1. We use Maven for managing libraries and dependencies for this application
-You can find the pom.xml file via mock_services/moni_app/pom.xml
+For Google's Snappy library and its Python binding:
+1. For *nix users (including MacOS users):
+    1. Install Snappy C libs, following instructions [here](https://stackoverflow.com/a/20678150/9479242)
+    <br>*Note: you might also be required to install gcc libraries that those instructions were based on, possibly refer to
+    [here](https://stackoverflow.com/questions/11912878/gcc-error-gcc-error-trying-to-exec-cc1-execvp-no-such-file-or-directory)*
+    2. Install the Python binding following [here](https://stackoverflow.com/a/41707800/9479242)
+2. For Windows users:
+    * Follow instructions in [here](https://stackoverflow.com/a/43756412/9479242)
+    
+For other libraries: 
+* Install libraries from requirements.txt (instaload\requirements.txt)
+
+### Monitoring app
+Language: **Java 14**
+* We use Maven for managing libraries and dependencies for this application
+<br>Find the pom.xml file via mock_services/moni_app/pom.xml
 
 ### RabbitMQ
-1. Download the RabbitMQ server for your system
-(https://www.rabbitmq.com/download.html)
+* Download the RabbitMQ server for your system [here](https://www.rabbitmq.com/download.html)
 
 ### Riemann
-1. For *nix users, simply follow the instructions here
-(http://riemann.io/quickstart.html)
-2. For Windows users, the easiest way is to download the standalone.jar file from their git repo releases 
-(https://github.com/riemann/riemann/releases) 
+1. For *nix users (including MacOS), simply follow the instructions [here](http://riemann.io/quickstart.html)
+2. For Windows users, the easiest way is to download the standalone .jar file from their [git releases](https://github.com/riemann/riemann/releases) 
 
 ### Running the application
 1. Make sure both RabbitMQ and Riemann servers are running
