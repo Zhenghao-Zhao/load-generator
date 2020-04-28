@@ -5,6 +5,7 @@ making the sub-systems more modular and easier to debug.
 This class creates a customized rabbitmq client from given config and credentials,
 it has send method which takes load and send to rmq server
 """
+import warnings
 
 import pika
 import snappy
@@ -17,18 +18,28 @@ DEFAULT_HOSTNAME = 'localhost'
 DEFAULT_VIRTUAL_HOST = '/'
 DEFAULT_EXCHANGE_NAME = 'logs'
 
+
 class RMQClient:
 
     def __init__(self, config):
-        self.host = config['rmq'].get('host', DEFAULT_HOSTNAME)
-        self.port = config['rmq'].get('port', DEFAULT_PORT)
-        self.vhost = config['rmq'].get('vhost', DEFAULT_VIRTUAL_HOST)
-        self.exchange_name = config['rmq'].get('exchange', DEFAULT_EXCHANGE_NAME)
-        self.credential = pika.PlainCredentials(username=config['rmq'].get('username', DEFAULT_USERNAME),
-                                                password=config['rmq'].get('password', DEFAULT_PASSWORD))
+        self.host = self.__read_val(config['rmq'], 'host', DEFAULT_HOSTNAME)
+        self.port = self.__read_val(config['rmq'], 'port', DEFAULT_PORT)
+        self.vhost = self.__read_val(config['rmq'], 'vhost', DEFAULT_VIRTUAL_HOST)
+        self.exchange_name = self.__read_val(config['rmq'], 'exchange', DEFAULT_EXCHANGE_NAME)
+        self.credential = pika.PlainCredentials(username=self.__read_val(config['rmq'], 'username', DEFAULT_USERNAME),
+                                                password=self.__read_val(config['rmq'], 'password', DEFAULT_PASSWORD))
         self.properties = pika.BasicProperties(content_type='application/protobuf; proto=com.aphyr.riemann.Msg',
                                                content_encoding="snappy")
 
+    def __read_val(self, section, key, default):
+        """read value from config section, return a warning and use default if no given key exists in the config file"""
+
+        val = section.get(key)
+        if val is None:
+            message = "Key not found: " + key + '\n' + "Using default value: " + default
+            warnings.warn(message)
+            return default
+        return val
 
     def send(self, msg):
         """establish connection with RMQ server, compress with snappy and send the message"""
@@ -37,7 +48,7 @@ class RMQClient:
         connection = pika.BlockingConnection(
             pika.ConnectionParameters(host=self.host,
                                       port=self.port,
-                                      virtual_host= self.vhost,
+                                      virtual_host=self.vhost,
                                       credentials=self.credential))
         channel = connection.channel()
         channel.exchange_declare(exchange=self.exchange_name, exchange_type='fanout')

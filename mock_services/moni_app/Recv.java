@@ -30,13 +30,17 @@ public class Recv {
     }
 
     public static <T> T getValueOrDefault(T value, T defaultValue) {
-        return value == null ? defaultValue : value;
+        if (value == null){
+            System.out.println("Null value read, using default instead.");
+            value = defaultValue;
+        }
+        return value;
     }
 
     public static void main(String[] argv) throws Exception {
         Config cfg = new Config("instaload/data/configs/rmq.cfg");
 
-        String HOSTNAME = getValueOrDefault(cfg.getProperty("host"), "127.0.0.1");
+        String HOSTNAME = getValueOrDefault(cfg.getProperty("host"), "localhost");
         String EXCHANGE_NAME = getValueOrDefault(cfg.getProperty("exchange"), "log");
 
         ConnectionFactory factory = new ConnectionFactory();
