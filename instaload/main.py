@@ -17,8 +17,10 @@ if __name__ == '__main__':
     config = configparser.ConfigParser()
     config.read('data/configs/rmq.cfg')
 
+    # select config section to be used for connection
+    section = config['rmq']
     # create custom RMQ client
-    client = RMQClient(config)
+    client = RMQClient(section)
 
     # create a LoadGenerator that generates and sends data to a custom RMQ client
     LoadGenerator(metrics=metrics, client=client, node_num=1).run()

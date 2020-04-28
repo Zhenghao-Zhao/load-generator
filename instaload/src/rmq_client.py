@@ -21,20 +21,21 @@ DEFAULT_EXCHANGE_NAME = 'logs'
 
 class RMQClient:
 
-    def __init__(self, config):
-        self.host = self.__read_val(config['rmq'], 'host', DEFAULT_HOSTNAME)
-        self.port = self.__read_val(config['rmq'], 'port', DEFAULT_PORT)
-        self.vhost = self.__read_val(config['rmq'], 'vhost', DEFAULT_VIRTUAL_HOST)
-        self.exchange_name = self.__read_val(config['rmq'], 'exchange', DEFAULT_EXCHANGE_NAME)
-        self.credential = pika.PlainCredentials(username=self.__read_val(config['rmq'], 'username', DEFAULT_USERNAME),
-                                                password=self.__read_val(config['rmq'], 'password', DEFAULT_PASSWORD))
+    def __init__(self, section):
+        self.section = section
+        self.host = self.__read_val('host', DEFAULT_HOSTNAME)
+        self.port = self.__read_val('port', DEFAULT_PORT)
+        self.vhost = self.__read_val('vhost', DEFAULT_VIRTUAL_HOST)
+        self.exchange_name = self.__read_val('exchange', DEFAULT_EXCHANGE_NAME)
+        self.credential = pika.PlainCredentials(username=self.__read_val('username', DEFAULT_USERNAME),
+                                                password=self.__read_val('password', DEFAULT_PASSWORD))
         self.properties = pika.BasicProperties(content_type='application/protobuf; proto=com.aphyr.riemann.Msg',
                                                content_encoding="snappy")
 
-    def __read_val(self, section, key, default):
+    def __read_val(self, key, default):
         """read value from config section, return a warning and use default if no given key exists in the config file"""
 
-        val = section.get(key)
+        val = self.section.get(key)
         if val is None:
             message = "Key not found: " + key + '\n' + "Using default value: " + default
             warnings.warn(message)
