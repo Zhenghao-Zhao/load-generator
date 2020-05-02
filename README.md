@@ -14,7 +14,6 @@ Instaload will allow Instaclustr developers to generate large amounts of mock da
     * Note that "Latest Release" refers to the latest version of the code with no experimental/work-in-progress features. For our latest work, check the `develop` branch.
 * [Documentation](https://drive.google.com/drive/folders/1xwgVBDAqbR-0H-oAxnSYZ9wgkiJFF5hS)
 	* [Audit 1](https://drive.google.com/open?id=1LJdIqN4f_QtRiAGmNa--DRuzeKxTupYX)
-	* [Audit 2](https://drive.google.com/open?id=1ggLEzGNdkLbRHWqTPv3s-uTHwqD8pVV4)
 	* [Audit 3](https://drive.google.com/open?id=1eeeyvOxhVNCOs0OE0pj5PrS7LTvF5LVY)
 	* [Project Schedule](https://drive.google.com/open?id=13r4F3HSRC7zvWvQ7C5R0khaqGytzV6Yw)
 	* [Decision Log](https://drive.google.com/open?id=1yDMyS0m3fL1ZBKwTFMU8WYMf0t8xxzgGl6DG04nO-s4)
@@ -31,3 +30,36 @@ Utkarsh Pandey | u6018954@anu.edu.au | Business manager, client engagement, audi
 Wei (Phillip) Xing	 | u5656487@anu.edu.au | Developer, ZenHub management |
 Yongchao (Laurence) Lyu	 | u6874539@anu.edu.au | Developer, meeting organiser |
 Yi Liu	 | u6641740@anu.edu.au | Developer |
+
+## Installation
+
+### Instaload 
+Language: **Python 3.7**
+
+For Google's Snappy library and its Python binding:
+1. For *nix users (including MacOS users):
+    1. Install Snappy C libs, following instructions [here](https://stackoverflow.com/a/20678150/9479242)
+    <br>*Note: you might also be required to install gcc libraries that those instructions were based on, possibly refer to
+    [here](https://stackoverflow.com/questions/11912878/gcc-error-gcc-error-trying-to-exec-cc1-execvp-no-such-file-or-directory)*
+    2. Install the Python binding following [here](https://stackoverflow.com/a/41707800/9479242)
+2. For Windows users:
+    * Follow instructions in [here](https://stackoverflow.com/a/43756412/9479242)
+    
+For other libraries: 
+* Install libraries from requirements.txt (instaload\requirements.txt)
+
+### Monitoring app
+Language: **Java 14**
+* We use Maven for managing libraries and dependencies for this application
+<br>Find the pom.xml file via mock_services/moni_app/pom.xml
+
+### RabbitMQ
+* Download the RabbitMQ server for your system [here](https://www.rabbitmq.com/download.html)
+
+### Riemann
+1. For *nix users (including MacOS), simply follow the instructions [here](http://riemann.io/quickstart.html)
+2. For Windows users, the easiest way is to download the standalone .jar file from their [git releases](https://github.com/riemann/riemann/releases) 
+
+### Running the application
+1. Make sure both RabbitMQ and Riemann servers are running
+2. Run the application from main.py (instaload\main.py)
