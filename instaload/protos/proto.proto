@@ -56,3 +56,8 @@ message Attribute {
   required string key = 1;
   optional string value = 2;
 }
+
+// newly created entity that consists of a number of Msg's
+message Batch {
+  repeated Msg msgs = 1;
+}
