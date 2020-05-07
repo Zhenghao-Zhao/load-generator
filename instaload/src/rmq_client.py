@@ -42,10 +42,6 @@ class RMQClient:
             return default
         return val
 
-    def batch(self, msg):
-        """add incoming message to the batch"""
-        return 0
-
     def send(self, msg):
         """establish connection with RMQ server, compress with snappy and send the message"""
 
