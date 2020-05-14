@@ -8,7 +8,7 @@ import json
 import threading
 import argparse
 
-from src.load_poster import LoadPoster
+from src.load_dispatcher import LoadDispatcher
 from src.rmq_client import RMQClient
 from src.load.load import Cluster
 
@@ -43,8 +43,8 @@ if __name__ == '__main__':
     f = open(json_path)
     data = json.load(f)
 
-    loadposter = LoadPoster(client=client)
+    dispatcher = LoadDispatcher(client=client)
     for c_template in data['clusters']:
         cluster = Cluster(c_template)
         # create a LoadPoster that converts load into a proper format and send via a rmq client
-        threading.Thread(target=loadposter.post, args=(cluster,)).start()
+        threading.Thread(target=dispatcher.dispatch, args=(cluster,)).start()

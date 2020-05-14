@@ -11,13 +11,13 @@ import time
 from .protos_out import proto_pb2
 
 
-class LoadPoster:
+class LoadDispatcher:
 
     def __init__(self, client):
         self.client = client
         self.period = 10
 
-    def post(self, cluster):
+    def dispatch(self, cluster):
 
         # Create multiple scheduler threads that add a load thread every 20s
         for i in range(cluster.node_number):
