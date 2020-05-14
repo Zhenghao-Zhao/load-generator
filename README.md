@@ -60,6 +60,9 @@ Language: **Java 14**
 1. For *nix users (including MacOS), simply follow the instructions [here](http://riemann.io/quickstart.html)
 2. For Windows users, the easiest way is to download the standalone .jar file from their [git releases](https://github.com/riemann/riemann/releases) 
 
-### Running the application
+## Running the application
 1. Make sure both RabbitMQ and Riemann servers are running
-2. Run the application from main.py (instaload\main.py)
+2. Run the application from **main.py** (instaload\main.py) (e.g. *python main.py*)
+3. Optional: specify config file paths in commandline: **--input_config_file**, **--input_json_file** (e.g. *python main.py --input_config_file path1 --input_json_file path2*)
+    * **--input_config_file** is the path to the .cfg file that configures rabbitMQ. By default it uses **data/configs/rmq.cfg**.
+    * **--input_json_file** is the path to the .json file that describes the format of the load you want to generate. By default it uses **data/metrics/nodes.json**.

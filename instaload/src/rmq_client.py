@@ -21,8 +21,8 @@ DEFAULT_EXCHANGE_NAME = 'logs'
 
 class RMQClient:
 
-    def __init__(self, section):
-        self.section = section
+    def __init__(self, config):
+        self.config = config
         self.host = self.__read_val('host', DEFAULT_HOSTNAME)
         self.port = self.__read_val('port', DEFAULT_PORT)
         self.vhost = self.__read_val('vhost', DEFAULT_VIRTUAL_HOST)
@@ -35,7 +35,7 @@ class RMQClient:
     def __read_val(self, key, default):
         """read value from config section, return a warning and use default if no given key exists in the config file"""
 
-        val = self.section.get(key)
+        val = self.config.get(key)
         if val is None:
             message = "Key not found: " + key + '\n' + "Using default value: " + default
             warnings.warn(message)

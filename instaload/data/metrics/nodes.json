@@ -1,0 +1,54 @@
+{
+  "clusters": [
+    {
+      "id": 0,
+      "schema": 1,
+      "table": 1,
+      "metrics": {
+        "availableBlocks": "(0 ~ 1)",
+        "freeInodes": "(1 ~ 2)",
+        "availableInodes": "(2 ~ 3)",
+        "freeBlocks": "(> 0 (10 ~ 11))",
+        "blockSize": "(> 0 (100 ~ 101))",
+        "totalInodes": "(> 0 (200 ~ 201))",
+        "totalBlocks": "(> 0 (300 ~ 301))"
+      },
+      "nodes": [
+        {
+          "id": 0,
+          "additional_metrics": {
+            "whatever": "(0 ~ 1)"
+          }
+        },
+        {
+          "id": 1,
+          "additional_metrics": {
+            "whatever": "(> 20 (10 ~ 100))"
+          }
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "schema": 1,
+      "table": 1,
+      "metrics": {
+        "availableBlocks": "(500 ~ 600)"
+      },
+      "nodes": [
+        {
+          "id": 0,
+          "additional_metrics": {
+            "something else": "(900 ~ 1000)"
+          }
+        },
+        {
+          "id": 1,
+          "additional_metrics": {
+            "anything else": "(1000 ~ 1100)"
+          }
+        }
+      ]
+    }
+  ]
+}
