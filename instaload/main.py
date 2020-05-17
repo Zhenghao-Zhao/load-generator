@@ -3,7 +3,6 @@ The purpose of this file is to load data from external files, and pass
 them to respective class/method calls
 """
 
-import configparser
 import json
 import threading
 import argparse
@@ -17,9 +16,9 @@ def get_args():
     """create argparser and get arguments from cmd."""
 
     parser = argparse.ArgumentParser(prog='main')
-    parser.add_argument('--input_config_file', default='data/configs/rmq.cfg',
-                        help='Path to the input .cfg file that configures rabbitMQ')
-    parser.add_argument('--input_json_file', default='data/metrics/nodes.json',
+    parser.add_argument('--input_config_file', default='data/configs/rabbitmq_config.json',
+                        help='Path to the input json file that configures rabbitMQ')
+    parser.add_argument('--input_json_file', default='data/configs/load_config.json',
                         help='Path to the input json file that describes the format of the load you want to generate')
     args = parser.parse_args()
 
@@ -32,13 +31,10 @@ if __name__ == '__main__':
     config_path = path_dict['input_config_file']
     json_path = path_dict['input_json_file']
 
-    # read config data
-    config = configparser.ConfigParser()
-    config.read(config_path)
-    # select config section to be used for connection
-    section = config['rmq']
+    f = open(config_path)
+    rmq_config = json.load(f)
     # create custom RMQ client
-    client = RMQClient(section)
+    client = RMQClient(rmq_config)
 
     f = open(json_path)
     data = json.load(f)

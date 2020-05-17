@@ -64,5 +64,14 @@ Language: **Java 14**
 1. Make sure both RabbitMQ and Riemann servers are running
 2. Run the application from **main.py** (instaload\main.py) (e.g. *python main.py*)
 3. Optional: specify config file paths in commandline: **--input_config_file**, **--input_json_file** (e.g. *python main.py --input_config_file path1 --input_json_file path2*)
-    * **--input_config_file** is the path to the .cfg file that configures rabbitMQ. By default it uses **data/configs/rmq.cfg**.
+    * **--input_config_file** is the path to the .json file that configures the connection from Instaload to your destined rabbitMQ server. By default it uses **data/configs/rmq.json**.
     * **--input_json_file** is the path to the .json file that describes the format of the load you want to generate. By default it uses **data/metrics/nodes.json**.
+
+## Configuration
+You are allowed to supply additional configuration files
+
+1. To configure rabbitMQ's initial settings, you can either add your own rmq.cfg file to instaload/data/configs, and specify the path at cmd (see Running the application) or modify the existing rmq.cfg file.
+2. To configure Instaload, you can either modify the existing nodes.json file at data/metrics/nodes.json or add your own 
+A Cluster has properties of id, schema, table, metrics and nodes. 
+id: the unique identifier for that cluster. 
+schema: 

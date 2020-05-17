@@ -1,0 +1,8 @@
+{
+  "host": "localhost",
+  "vhost": "/",
+  "username": "guest",
+  "password": "guest",
+  "port": 5672,
+  "exchange": "logs"
+}

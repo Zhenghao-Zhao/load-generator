@@ -35,7 +35,7 @@ class RMQClient:
     def __read_val(self, key, default):
         """read value from config section, return a warning and use default if no given key exists in the config file"""
 
-        val = self.config.get(key)
+        val = self.config[key]
         if val is None:
             message = "Key not found: " + key + '\n' + "Using default value: " + default
             warnings.warn(message)
