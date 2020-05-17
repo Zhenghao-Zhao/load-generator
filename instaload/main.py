@@ -3,24 +3,44 @@ The purpose of this file is to load data from external files, and pass
 them to respective class/method calls
 """
 
-import configparser
-from src.load_generator import LoadGenerator
+import json
+import threading
+import argparse
+
+from src.load_dispatcher import LoadDispatcher
 from src.rmq_client import RMQClient
+from src.load.load import Cluster
+
+
+def get_args():
+    """create argparser and get arguments from cmd."""
+
+    parser = argparse.ArgumentParser(prog='main')
+    parser.add_argument('--input_rmq_config', default='data/configs/examples/rabbitmq_config.json',
+                        help='Path to the input json file that configures rabbitMQ')
+    parser.add_argument('--input_load_config', default='data/configs/examples/load_config.json',
+                        help='Path to the input json file that describes the format of the load you want to generate')
+    args = parser.parse_args()
+
+    return vars(args)
+
 
 if __name__ == '__main__':
 
-    # read metrics data
-    metrics = ['availableBlocks', 'freeInodes', 'availableInodes', 'freeBlocks', 'blockSize', 'totoalInodes',
-               'totalBlocks']
+    path_dict = get_args()
+    config_path = path_dict['input_rmq_config']
+    json_path = path_dict['input_load_config']
 
-    # read config data
-    config = configparser.ConfigParser()
-    config.read('data/configs/rmq.cfg')
-
-    # select config section to be used for connection
-    section = config['rmq']
+    f = open(config_path)
+    rmq_config = json.load(f)
     # create custom RMQ client
-    client = RMQClient(section)
+    client = RMQClient(rmq_config)
 
-    # create a LoadGenerator that generates and sends data to a custom RMQ client
-    LoadGenerator(metrics=metrics, client=client, node_num=1).run()
+    f = open(json_path)
+    data = json.load(f)
+
+    dispatcher = LoadDispatcher(client=client)
+    for c_template in data['clusters']:
+        cluster = Cluster(c_template)
+        # create a LoadPoster that converts load into a proper format and send via a rmq client
+        threading.Thread(target=dispatcher.dispatch, args=(cluster,)).start()

@@ -11,22 +11,21 @@ import pika
 import snappy
 
 # some params and their default values for creating a Pika connection
-DEFAULT_PORT = 5672
-DEFAULT_USERNAME = 'guest'
-DEFAULT_PASSWORD = 'guest'
-DEFAULT_HOSTNAME = 'localhost'
-DEFAULT_VIRTUAL_HOST = '/'
+DEFAULT_PORT = pika.ConnectionParameters.DEFAULT_PORT
+DEFAULT_USERNAME = pika.ConnectionParameters.DEFAULT_USERNAME
+DEFAULT_PASSWORD = pika.ConnectionParameters.DEFAULT_PASSWORD
+DEFAULT_HOSTNAME = pika.ConnectionParameters.DEFAULT_HOST
+DEFAULT_VIRTUAL_HOST = pika.ConnectionParameters.DEFAULT_VIRTUAL_HOST
 DEFAULT_EXCHANGE_NAME = 'logs'
-
 
 class RMQClient:
 
-    def __init__(self, section):
-        self.section = section
+    def __init__(self, config):
+        self.config = config
         self.host = self.__read_val('host', DEFAULT_HOSTNAME)
         self.port = self.__read_val('port', DEFAULT_PORT)
         self.vhost = self.__read_val('vhost', DEFAULT_VIRTUAL_HOST)
-        self.exchange_name = self.__read_val('exchange', DEFAULT_EXCHANGE_NAME)
+        self.exchange_name = self.__read_val('exchange_name', DEFAULT_EXCHANGE_NAME)
         self.credential = pika.PlainCredentials(username=self.__read_val('username', DEFAULT_USERNAME),
                                                 password=self.__read_val('password', DEFAULT_PASSWORD))
         self.properties = pika.BasicProperties(content_type='application/protobuf; proto=com.aphyr.riemann.Msg',
@@ -35,7 +34,7 @@ class RMQClient:
     def __read_val(self, key, default):
         """read value from config section, return a warning and use default if no given key exists in the config file"""
 
-        val = self.section.get(key)
+        val = self.config[key]
         if val is None:
             message = "Key not found: " + key + '\n' + "Using default value: " + default
             warnings.warn(message)
