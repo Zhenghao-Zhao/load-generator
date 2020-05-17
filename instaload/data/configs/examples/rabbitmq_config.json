@@ -4,5 +4,5 @@
   "username": "guest",
   "password": "guest",
   "port": 5672,
-  "exchange": "logs"
+  "exchange_name": "logs"
 }

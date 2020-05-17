@@ -16,9 +16,9 @@ def get_args():
     """create argparser and get arguments from cmd."""
 
     parser = argparse.ArgumentParser(prog='main')
-    parser.add_argument('--input_config_file', default='data/configs/rabbitmq_config.json',
+    parser.add_argument('--input_rmq_config', default='data/configs/examples/rabbitmq_config.json',
                         help='Path to the input json file that configures rabbitMQ')
-    parser.add_argument('--input_json_file', default='data/configs/load_config.json',
+    parser.add_argument('--input_load_config', default='data/configs/examples/load_config.json',
                         help='Path to the input json file that describes the format of the load you want to generate')
     args = parser.parse_args()
 
@@ -28,8 +28,8 @@ def get_args():
 if __name__ == '__main__':
 
     path_dict = get_args()
-    config_path = path_dict['input_config_file']
-    json_path = path_dict['input_json_file']
+    config_path = path_dict['input_rmq_config']
+    json_path = path_dict['input_load_config']
 
     f = open(config_path)
     rmq_config = json.load(f)
