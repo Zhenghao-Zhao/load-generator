@@ -2,6 +2,7 @@
   "clusters": [
     {
       "id": 0,
+      "count": 1,
       "schema": 1,
       "table": 1,
       "metrics": {
@@ -16,36 +17,9 @@
       "nodes": [
         {
           "id": 0,
+          "count": 1,
           "additional_metrics": {
             "whatever": "(0 ~ 1)"
-          }
-        },
-        {
-          "id": 1,
-          "additional_metrics": {
-            "whatever": "(> 20 (10 ~ 100))"
-          }
-        }
-      ]
-    },
-    {
-      "id": 1,
-      "schema": 1,
-      "table": 1,
-      "metrics": {
-        "availableBlocks": "(500 ~ 600)"
-      },
-      "nodes": [
-        {
-          "id": 0,
-          "additional_metrics": {
-            "something else": "(900 ~ 1000)"
-          }
-        },
-        {
-          "id": 1,
-          "additional_metrics": {
-            "anything else": "(1000 ~ 1100)"
           }
         }
       ]
