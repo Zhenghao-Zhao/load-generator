@@ -28,11 +28,11 @@ class LoadDispatcher:
         """run a python scheduler periodically. The scheduler starts a new thread that generates and sends load"""
 
         # Fire a thread immediately for the first time
-        self.__send_load(node.get_new_load())
+        self.__send_load(node.get_next_batch())
 
         s = sched.scheduler(time.time, time.sleep)
         while True:
-            s.enter(self.period, 1, self.__send_load, argument=(node.get_new_load(),))
+            s.enter(self.period, 1, self.__send_load, argument=(node.get_next_batch(),))
             s.run()
 
     def __send_load(self, metrics):

@@ -3,8 +3,8 @@
     {
       "id": 0,
       "count": 1,
-      "schema": 1,
-      "table": 1,
+      "schema": 5,
+      "table": 5,
       "metrics": {
         "availableBlocks": "(0 ~ 1)",
         "freeInodes": "(1 ~ 2)",

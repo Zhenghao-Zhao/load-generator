@@ -1,5 +1,5 @@
-from .metric import IncMetric
-from .metric import RandMetric
+from .metric_struct import IncMetricStruct
+from .metric_struct import RandMetricStruct
 
 
 class Node:
@@ -12,37 +12,45 @@ class Node:
         self.schema = schema
         self.table = table
         self.id = n_template['id']
-        self.live_metrics = {}
-        self.output_metrics = {}
+        self.batch_size = 20
         self.__init_metrics()
 
     def __init_metrics(self):
         """initialize metrics"""
 
+        # parsing metric patterns
         for metric_name, metric_pattern in self.metrics.items():
             l = metric_pattern.split()
             if l[0] == '(>':
-                self.metrics[metric_name] = IncMetric(float(l[1]), float(l[2][1:]), float(l[4][:-2]))
+                self.metrics[metric_name] = IncMetricStruct(float(l[2][1:]), float(l[4][:-2]))
             else:
-                self.metrics[metric_name] = RandMetric(0, float(l[0][1:]), float(l[-1][:-1]))
+                self.metrics[metric_name] = RandMetricStruct(float(l[0][1:]), float(l[-1][:-1]))
 
-    def __gen_metric_values(self):
-        """generate metric values and replace old ones in live_metrics"""
-
-        for metric_name, metric in self.metrics.items():
-            self.live_metrics[metric_name] = metric.update()
-
-    def get_new_load(self):
-        """refresh metric values and get copies of load"""
-
-        self.__gen_metric_values()
-        for key, value in self.live_metrics.items():
-            for s in range(1, self.schema+1):
-                for t in range(1, self.table+1):
+        # initialize a batch: a dict of size 20
+        mini_batch = {}
+        for key, struct in self.metrics.items():
+            batch_list = []
+            for s in range(1, self.schema + 1):
+                for t in range(1, self.table + 1):
                     k = '/metrics/type=IndexTable/keyspace={}/scope={}/name={}/mean'.format(s, t, key)
-                    self.output_metrics[k] = value
+                    # From Python 3.6 onwards, the standard dict type maintains insertion order by default.
+                    mini_batch[k] = 0
+                    # if the batch has 20 items or at the end of iteration,
+                    # append the batch to list of that metric and create a new empty batch
+                    if len(mini_batch) == self.batch_size or (s == self.schema and t == self.table):
+                        batch_list.append(mini_batch)
+                        mini_batch = {}
 
-        return self.output_metrics
+            struct.set_batch_list(batch_list)
+
+    def get_next_batch(self):
+        """get the next batch (a dict) off each metric struct and combine them into single dict"""
+
+        rst = {}
+        for struct in self.metrics.values():
+            rst = {**rst, **struct.get_next_batch()}
+
+        return rst
 
 
 class Cluster:
@@ -56,7 +64,6 @@ class Cluster:
         self.nodes = []
         self.__init_load(c_template)
 
-
     def __init_load(self, c_template):
         """initialize node load"""
 
@@ -66,7 +73,8 @@ class Cluster:
             for n in node_templates:
                 node_num = n['count']
                 for i in range(node_num):
-                    node = Node({**c_template['metrics'], **n['additional_metrics']}, c_template['schema'], c_template['table'], n)
+                    node = Node({**c_template['metrics'], **n['additional_metrics']}, c_template['schema'],
+                                c_template['table'], n)
                     # amoritized 0(1)
                     lst.append(node)
 
