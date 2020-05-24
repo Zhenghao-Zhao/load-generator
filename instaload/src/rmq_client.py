@@ -55,6 +55,6 @@ class RMQClient:
 
         message = snappy.compress(msg.SerializeToString())
         channel.basic_publish(exchange=self.exchange_name, routing_key='', body=message, properties=self.properties)
-        # print(" [x] Sent %r" % message)
+        print(" [x] Sent %r" % message)
 
         connection.close()

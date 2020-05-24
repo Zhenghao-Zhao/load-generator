@@ -58,7 +58,6 @@ class Cluster:
 
     def __init__(self, c_template):
         self.id = c_template['id']
-        self.cluster_number = c_template['count']
 
         self.node_number = 0
         self.nodes = []
@@ -69,14 +68,13 @@ class Cluster:
 
         node_templates = c_template['nodes']
         lst = []
-        for c in range(self.cluster_number):
-            for n in node_templates:
-                node_num = n['count']
-                for i in range(node_num):
-                    node = Node({**c_template['metrics'], **n['additional_metrics']}, c_template['schema'],
-                                c_template['table'], n)
-                    # amoritized 0(1)
-                    lst.append(node)
+        for n in node_templates:
+            node_num = n['count']
+            for i in range(node_num):
+                node = Node({**c_template['metrics'], **n['additional_metrics']}, c_template['schema'],
+                            c_template['table'], n)
+                # amoritized 0(1)
+                lst.append(node)
 
         self.node_number = len(lst)
         self.nodes = lst

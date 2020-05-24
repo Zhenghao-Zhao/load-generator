@@ -15,7 +15,7 @@ class LoadDispatcher:
 
     def __init__(self, client):
         self.client = client
-        self.period = 10
+        self.period = 20
 
     def dispatch(self, cluster):
 
@@ -46,6 +46,7 @@ class LoadDispatcher:
             threading.Thread(target=self.client.send, args=(msg,)).start()
         except:
             print("Error: unable to start thread")
+
 
     def __gen_msg(self, metrics):
         """generate a Msg instance that contains the metrics for a node. Msg is the format we use to send load"""
