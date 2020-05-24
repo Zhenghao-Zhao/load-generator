@@ -18,21 +18,16 @@ class Node:
     def __init_metrics(self):
         """initialize metrics"""
 
-        # parsing metric patterns
-        for metric_name, metric_pattern in self.metrics.items():
-            l = metric_pattern.split()
-            if l[0] == '(>':
-                self.metrics[metric_name] = IncMetricStruct(float(l[2][1:]), float(l[4][:-2]))
-            else:
-                self.metrics[metric_name] = RandMetricStruct(float(l[0][1:]), float(l[-1][:-1]))
-
-        # initialize a batch: a dict of size 20
         mini_batch = {}
-        for key, struct in self.metrics.items():
+
+        # split data into batches of size 20 or less
+        for metric_name, metric_pattern in self.metrics.items():
+
+            # get the batch list for that metric
             batch_list = []
             for s in range(1, self.schema + 1):
                 for t in range(1, self.table + 1):
-                    k = '/metrics/type=IndexTable/keyspace={}/scope={}/name={}/mean'.format(s, t, key)
+                    k = '/metrics/type=IndexTable/keyspace={}/scope={}/name={}/mean'.format(s, t, metric_name)
                     # From Python 3.6 onwards, the standard dict type maintains insertion order by default.
                     mini_batch[k] = 0
                     # if the batch has 20 items or at the end of iteration,
@@ -41,7 +36,13 @@ class Node:
                         batch_list.append(mini_batch)
                         mini_batch = {}
 
-            struct.set_batch_list(batch_list)
+            # parse metric patterns
+            l = metric_pattern.split()
+            if l[0] == '(>':
+                self.metrics[metric_name] = IncMetricStruct(float(l[2][1:]), float(l[4][:-2]), batch_list)
+            else:
+                self.metrics[metric_name] = RandMetricStruct(float(l[0][1:]), float(l[-1][:-1]), batch_list)
+
 
     def get_next_batch(self):
         """get the next batch (a dict) off each metric struct and combine them into single dict"""

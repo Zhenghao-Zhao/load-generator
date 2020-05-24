@@ -3,12 +3,13 @@ import random
 
 class MetricStruct:
     """
-    A metric struct object is responsible for generating and updating metric values for a particular metric.
+    A metric struct object is responsible for updating and managing the passed in batch list for that metric.
+    A batch list contains batches of metric data.
     Its child class should have a method for updating the metric values. See examples below.
     """
 
-    def __init__(self):
-        self.batch_list = []
+    def __init__(self, batch_list):
+        self.batch_list = batch_list
         self.current_batch_index = 0
 
     def get_new_metric_value(self):
@@ -23,12 +24,6 @@ class MetricStruct:
                 batch[key] = current_value
 
         self.current_batch_index = 0
-
-    def set_batch_list(self, batch_list):
-        """replace holding batch with input batch list and update batch values"""
-
-        self.batch_list = batch_list
-        self.__update_batch_list()
 
     def get_next_batch(self):
         """get the batch at the current batch index"""
@@ -45,8 +40,8 @@ class MetricStruct:
 class IncMetricStruct(MetricStruct):
     """increasing metrics"""
 
-    def __init__(self, a, b):
-        super().__init__()
+    def __init__(self, a, b, batch_list):
+        super().__init__(batch_list)
         self.a = a
         self.b = b
         self.current = 0
@@ -61,8 +56,8 @@ class IncMetricStruct(MetricStruct):
 class RandMetricStruct(MetricStruct):
     """random metrics"""
 
-    def __init__(self, a, b):
-        super().__init__()
+    def __init__(self, a, b, batch_list):
+        super().__init__(batch_list)
         self.a = a
         self.b = b
 
