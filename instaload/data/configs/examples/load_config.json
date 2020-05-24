@@ -16,7 +16,7 @@
       "nodes": [
         {
           "id": 0,
-          "count": 4000,
+          "count": 1,
           "additional_metrics": {
             "whatever": "(0 ~ 1)"
           }
