@@ -10,7 +10,7 @@ class MetricStruct:
 
     def __init__(self, batch_list):
         self.batch_list = batch_list
-        self.current_batch_index = 0
+        self.next_batch_index = 0
 
     def get_new_metric_value(self):
         return 0
@@ -23,16 +23,18 @@ class MetricStruct:
             for key, value in batch.items():
                 batch[key] = current_value
 
-        self.current_batch_index = 0
 
     def get_next_batch(self):
         """get the batch at the current batch index"""
-
-        rst = self.batch_list[self.current_batch_index]
-        if self.current_batch_index+1 == len(self.batch_list):
+        if self.next_batch_index == 0:
             self.__update_batch_list()
-        else:
-            self.current_batch_index += 1
+
+        rst = self.batch_list[self.next_batch_index]
+
+        self.next_batch_index += 1
+
+        if self.next_batch_index == len(self.batch_list):
+            self.next_batch_index = 0
 
         return rst
 
