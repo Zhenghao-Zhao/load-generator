@@ -11,6 +11,7 @@ class MetricStruct:
     def __init__(self, batch_list):
         self.batch_list = batch_list
         self.next_batch_index = 0
+        self.__update_batch_list()
 
     def get_new_metric_value(self):
         return 0
@@ -23,18 +24,14 @@ class MetricStruct:
             for key, value in batch.items():
                 batch[key] = current_value
 
-
     def get_next_batch(self):
         """get the batch at the current batch index"""
-        if self.next_batch_index == 0:
-            self.__update_batch_list()
 
         rst = self.batch_list[self.next_batch_index]
-
         self.next_batch_index += 1
-
         if self.next_batch_index == len(self.batch_list):
             self.next_batch_index = 0
+            self.__update_batch_list()
 
         return rst
 
@@ -43,10 +40,10 @@ class IncMetricStruct(MetricStruct):
     """increasing metrics"""
 
     def __init__(self, a, b, batch_list):
-        super().__init__(batch_list)
         self.a = a
         self.b = b
         self.current = 0
+        super().__init__(batch_list)
 
     def get_new_metric_value(self):
         """generates metric values using (> a (b ~ c))"""
@@ -59,9 +56,9 @@ class RandMetricStruct(MetricStruct):
     """random metrics"""
 
     def __init__(self, a, b, batch_list):
-        super().__init__(batch_list)
         self.a = a
         self.b = b
+        super().__init__(batch_list)
 
     def get_new_metric_value(self):
         """generates metric values using (a ~ b)"""
