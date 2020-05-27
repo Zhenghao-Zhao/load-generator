@@ -27,11 +27,12 @@ class MetricStruct:
     def get_next_batch(self):
         """get the batch at the current batch index"""
 
-        rst = self.batch_list[self.next_batch_index]
-        self.next_batch_index += 1
         if self.next_batch_index == len(self.batch_list):
             self.next_batch_index = 0
             self.__update_batch_list()
+
+        rst = self.batch_list[self.next_batch_index]
+        self.next_batch_index += 1
 
         return rst
 
