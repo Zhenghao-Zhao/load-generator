@@ -9,6 +9,7 @@ import warnings
 
 import pika
 import snappy
+from .protos_out import proto_pb2
 
 # some params and their default values for creating a Pika connection
 DEFAULT_PORT = pika.ConnectionParameters.DEFAULT_PORT
@@ -32,6 +33,20 @@ class RMQClient:
         self.properties = pika.BasicProperties(content_type='application/protobuf; proto=com.aphyr.riemann.Msg',
                                                content_encoding="snappy")
 
+    @staticmethod
+    def proto_load(metrics):
+        """convert metrics (dict) into proto form"""
+
+        # generate msg with load
+        msg = proto_pb2.Msg()
+        for key, value in metrics.items():
+            event = msg.events.add()
+            event.host = 'myhost.foobar.com'
+            event.service = key
+            event.tags.extend(["sla|running"])
+            event.metric_f = value
+        return msg
+
     def __read_val(self, key, default):
         """read value from config section, return a warning and use default if no given key exists in the config file"""
 
@@ -42,8 +57,10 @@ class RMQClient:
             return default
         return val
 
-    def send(self, msg):
+    def send(self, metrics):
         """establish connection with RMQ server, compress with snappy and send the message"""
+
+        msg = self.proto_load(metrics)
 
         # Pika requires a Pika connection per thread: https://pika.readthedocs.io/en/stable/faq.html
         connection = pika.BlockingConnection(
@@ -57,5 +74,4 @@ class RMQClient:
         message = snappy.compress(msg.SerializeToString())
         channel.basic_publish(exchange=self.exchange_name, routing_key='', body=message, properties=self.properties)
         print(" [x] Sent %r" % message)
-
         connection.close()

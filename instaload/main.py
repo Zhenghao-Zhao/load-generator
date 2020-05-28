@@ -7,8 +7,7 @@ import json
 import threading
 import argparse
 
-from src.load_dispatcher import LoadDispatcher
-from src.rmq_client import RMQClient
+from src.rmq_client.rmq_client import RMQClient
 from src.load.load import Cluster
 
 
@@ -39,7 +38,6 @@ if __name__ == '__main__':
     f = open(json_path)
     data = json.load(f)
 
-    dispatcher = LoadDispatcher(client=client)
     for c_template in data['clusters']:
-        cluster = Cluster(c_template)
-        threading.Thread(target=dispatcher.dispatch, args=(cluster.get_nodes(),)).start()
+        cluster = Cluster(c_template, client)
+        threading.Thread(target=cluster.dispatch_load).start()
