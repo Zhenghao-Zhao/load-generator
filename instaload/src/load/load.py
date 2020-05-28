@@ -43,7 +43,6 @@ class Node:
             else:
                 self.metrics[metric_name] = RandMetricStruct(float(l[0][1:]), float(l[-1][:-1]), batch_list)
 
-
     def get_next_batch(self):
         """get the next batch (a dict) off each metric struct and combine them into single dict"""
 
@@ -59,8 +58,6 @@ class Cluster:
 
     def __init__(self, c_template):
         self.id = c_template['id']
-
-        self.node_number = 0
         self.nodes = []
         self.__init_load(c_template)
 
@@ -77,10 +74,9 @@ class Cluster:
                 # amoritized 0(1)
                 lst.append(node)
 
-        self.node_number = len(lst)
         self.nodes = lst
 
-    def get_node(self, nid):
+    def get_nodes(self):
         """retrieve a node object from the list"""
 
-        return self.nodes[nid]
+        return self.nodes

@@ -17,11 +17,11 @@ class LoadDispatcher:
         self.client = client
         self.period = 20
 
-    def dispatch(self, cluster):
+    def dispatch(self, nodes):
+        """takes in a list of node objects, start threads for sending each node load"""
 
         # Create multiple scheduler threads that add a load thread every 20s
-        for i in range(cluster.node_number):
-            node = cluster.get_node(i)
+        for node in nodes:
             threading.Thread(target=self.__add_load, args=(node,)).start()
 
     def __add_load(self, node):
@@ -39,18 +39,6 @@ class LoadDispatcher:
         """start a load thread"""
 
         # generate msg with load
-        msg = self.__gen_msg(metrics)
-
-        # send load
-        try:
-            threading.Thread(target=self.client.send, args=(msg,)).start()
-        except:
-            print("Error: unable to start thread")
-
-
-    def __gen_msg(self, metrics):
-        """generate a Msg instance that contains the metrics for a node. Msg is the format we use to send load"""
-
         msg = proto_pb2.Msg()
 
         for key, value in metrics.items():
@@ -60,4 +48,8 @@ class LoadDispatcher:
             event.tags.extend(["sla|running"])
             event.metric_f = value
 
-        return msg
+        # send load
+        try:
+            threading.Thread(target=self.client.send, args=(msg,)).start()
+        except:
+            print("Error: unable to start thread")

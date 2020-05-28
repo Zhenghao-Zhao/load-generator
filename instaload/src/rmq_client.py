@@ -18,6 +18,7 @@ DEFAULT_HOSTNAME = pika.ConnectionParameters.DEFAULT_HOST
 DEFAULT_VIRTUAL_HOST = pika.ConnectionParameters.DEFAULT_VIRTUAL_HOST
 DEFAULT_EXCHANGE_NAME = 'logs'
 
+
 class RMQClient:
 
     def __init__(self, config):

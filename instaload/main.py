@@ -42,5 +42,4 @@ if __name__ == '__main__':
     dispatcher = LoadDispatcher(client=client)
     for c_template in data['clusters']:
         cluster = Cluster(c_template)
-        # create a LoadPoster that converts load into a proper format and send via a rmq client
-        threading.Thread(target=dispatcher.dispatch, args=(cluster,)).start()
+        threading.Thread(target=dispatcher.dispatch, args=(cluster.get_nodes(),)).start()
