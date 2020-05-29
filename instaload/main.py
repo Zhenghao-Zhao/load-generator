@@ -1,18 +1,16 @@
-"""
-The purpose of this file is to load data from external files, and pass
-them to respective class/method calls
-"""
-
 import json
 import threading
 import argparse
-
 from src.rmq_client.rmq_client import RMQClient
 from src.load.load import Cluster
 
 
 def get_args():
-    """create argparser and get arguments from cmd."""
+    """
+    Create argparser and get arguments from cmd.
+    If nothing is passed in cmd, use default config paths instead.
+    :return dict of config paths.
+    """
 
     parser = argparse.ArgumentParser(prog='main')
     parser.add_argument('--input_rmq_config', default='data/configs/examples/rabbitmq_config.json',
@@ -25,17 +23,17 @@ def get_args():
 
 
 if __name__ == '__main__':
-
+    # get config paths from cmd
     path_dict = get_args()
-    config_path = path_dict['input_rmq_config']
-    json_path = path_dict['input_load_config']
+    rmq_config_path = path_dict['input_rmq_config']
+    load_config_path = path_dict['input_load_config']
 
-    f = open(config_path)
+    f = open(rmq_config_path)
     rmq_config = json.load(f)
-    # create custom RMQ client
+    # create a RMQ client with specified connection parameters
     client = RMQClient(rmq_config)
 
-    f = open(json_path)
+    f = open(load_config_path)
     data = json.load(f)
 
     for c_template in data['clusters']:
