@@ -11,7 +11,7 @@
         "freeBlocks": "(> 0 (10 ~ 11))",
         "blockSize": "(> 0 (100 ~ 101))",
         "totalInodes": "(> 0 (200 ~ 201))",
-        "totalBlocks": "(> 0 (300 ~ 301))"
+        "totalBlocks": "(> 1000 (300 ~ 301))"
       },
       "nodes": [
         {

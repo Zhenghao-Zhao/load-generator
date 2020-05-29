@@ -13,9 +13,9 @@ def get_args():
     """
 
     parser = argparse.ArgumentParser(prog='main')
-    parser.add_argument('--input_rmq_config', default='data/configs/examples/rabbitmq_config.json',
+    parser.add_argument('--input_rmq_config', default='configs/examples/rabbitmq_config.json',
                         help='Path to the input json file that configures rabbitMQ')
-    parser.add_argument('--input_load_config', default='data/configs/examples/load_config.json',
+    parser.add_argument('--input_load_config', default='configs/examples/load_config.json',
                         help='Path to the input json file that describes the format of the load you want to generate')
     args = parser.parse_args()
 
