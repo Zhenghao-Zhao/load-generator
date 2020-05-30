@@ -5,27 +5,22 @@ import com.rabbitmq.client.DeliverCallback;
 import io.riemann.riemann.Proto;
 import io.riemann.riemann.client.RiemannClient;
 import org.xerial.snappy.Snappy;
-
-import java.io.FileInputStream;
-import java.util.Properties;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.*;
+import java.io.FileReader;
 
 public class Recv {
 
     public static class Config {
-
-        Properties properties;
-        public Config(String path) {
-            properties = new Properties();
-            try {
-                properties.load(new FileInputStream(path));
-            }catch(Exception eta){
-                eta.printStackTrace();
-            }
+        JSONObject obj;
+        public Config(String path) throws Exception {
+            // parsing json file
+            Object obj = new JSONParser().parse(new FileReader(path));
+            // typecasting obj to JSONObject
+            this.obj = (JSONObject) obj;
         }
-
         public String getProperty(String key) {
-
-            return this.properties.getProperty(key);
+            return (String) this.obj.get(key);
         }
     }
 
@@ -38,10 +33,10 @@ public class Recv {
     }
 
     public static void main(String[] argv) throws Exception {
-        Config cfg = new Config("mock_services/moni_app/configs/rmq.cfg");
+        Config cfg = new Config("configs/rabbitmq_config.json");
 
         String HOSTNAME = getValueOrDefault(cfg.getProperty("host"), "localhost");
-        String EXCHANGE_NAME = getValueOrDefault(cfg.getProperty("exchange"), "log");
+        String EXCHANGE_NAME = getValueOrDefault(cfg.getProperty("exchange_name"), "log");
 
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(HOSTNAME);

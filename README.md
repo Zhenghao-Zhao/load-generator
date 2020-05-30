@@ -59,7 +59,7 @@ We use mock applications (simplified from our client's applications) to test Ins
 Language: **Java 14**
 
 We use [Maven](https://maven.apache.org/) for managing libraries and dependencies for this application.
-<br>Find the pom.xml file via mock_services\moni_app\pom.xml
+<br>Find the pom.xml file via mock_apps\moni_app\pom.xml
 
 #### RabbitMQ
 Download the RabbitMQ server for your system [here](https://www.rabbitmq.com/download.html).
