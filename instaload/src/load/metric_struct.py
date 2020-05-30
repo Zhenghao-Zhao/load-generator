@@ -34,6 +34,7 @@ class MetricStruct:
         """
         How you want to update the metric value.
         """
+
         return 0
 
     def get_next_batch(self):

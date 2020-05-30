@@ -8,7 +8,7 @@ from src.load.load import Cluster
 def get_args():
     """
     Create argparser and get arguments from cmd.
-    If nothing is passed in cmd, use default config paths instead.
+    If nothing is passed in cmd, the default config paths are used instead.
     :return dict of config paths.
     """
 
@@ -18,7 +18,6 @@ def get_args():
     parser.add_argument('--input_load_config', default='configs/examples/load_config.json',
                         help='Path to the input json file that describes the format of the load you want to generate')
     args = parser.parse_args()
-
     return vars(args)
 
 
@@ -36,6 +35,7 @@ if __name__ == '__main__':
     f = open(load_config_path)
     data = json.load(f)
 
+    # start a thread for each cluster in the config
     for c_template in data['clusters']:
         cluster = Cluster(c_template, client)
         threading.Thread(target=cluster.dispatch_load).start()
