@@ -24,14 +24,16 @@ def get_args():
 if __name__ == '__main__':
     # get config paths from cmd
     path_dict = get_args()
-    rmq_config_path = path_dict['input_rmq_config']
-    load_config_path = path_dict['input_load_config']
 
+    # get data from RabbitMQ config file
+    rmq_config_path = path_dict['input_rmq_config']
     f = open(rmq_config_path)
     rmq_config = json.load(f)
     # create a RMQ client with specified connection parameters
     client = RMQClient(rmq_config)
 
+    # get data from load config file
+    load_config_path = path_dict['input_load_config']
     f = open(load_config_path)
     data = json.load(f)
 
