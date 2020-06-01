@@ -16,7 +16,7 @@ class Node:
         :param metrics: a dict of metrics from load config json file.
         :param schema: the schema number in int.
         :param table: the table number in int.
-        :param n_config: a dict containing node property specification.
+        :param nid: the id for this node.
         """
 
         self.id = nid
@@ -90,7 +90,7 @@ class Cluster:
         """
         Construct a cluster object.
         :param c_config: a dict with property specification for a cluster.
-        :param client: a rabbitMQ client.
+        :param client: a rabbitMQ client as a rmq_client object.
         """
         self.id = c_config['id']
         self.nodes = []
