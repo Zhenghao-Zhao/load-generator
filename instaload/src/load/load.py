@@ -10,7 +10,7 @@ class Node:
     This class is responsible for generating the load of a node per call.
     """
 
-    def __init__(self, metrics, schema, table, n_config):
+    def __init__(self, metrics, schema, table, nid):
         """
         construct a node object.
         :param metrics: a dict of metrics from load config json file.
@@ -19,7 +19,7 @@ class Node:
         :param n_config: a dict containing node property specification.
         """
 
-        self.id = n_config['id']
+        self.id = nid
         self.metrics = metrics
         self.schema = schema
         self.table = table
@@ -110,7 +110,7 @@ class Cluster:
             # generate a number of nodes with the same config according to "count" property
             for i in range(node_num):
                 node = Node({**c_config['metrics'], **n['additional_metrics']}, c_config['schema'],
-                            c_config['table'], n)
+                            c_config['table'], n['id'])
                 lst.append(node)
         self.nodes = lst
 
