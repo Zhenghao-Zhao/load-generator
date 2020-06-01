@@ -72,7 +72,7 @@ class IncMetricStruct(MetricStruct):
 
     def get_new_metric_value(self):
         """
-        Generates metric values using (> a (b ~ c)).
+        Generate metric values using (> a (b ~ c)).
         """
 
         self.current = self.current + random.uniform(self.b, self.c)
@@ -98,7 +98,7 @@ class RandMetricStruct(MetricStruct):
 
     def get_new_metric_value(self):
         """
-        Generates metric values using (a ~ b).
+        Generate metric values using (a ~ b).
         """
 
         return random.uniform(self.a, self.b)

@@ -28,7 +28,7 @@ class Node:
 
     def __init_metrics(self):
         """
-        This method first generate data into lists of batches. Each batch has size of batch_size unless it's the last
+        This method first generates data into lists of batches. Each batch has size of batch_size unless it's the last
         batch.
 
         E.g. if when batch_size = 20: it converts
@@ -116,7 +116,7 @@ class Cluster:
 
     def dispatch_load(self):
         """
-        Starts a thread for each node in the cluster that dispatches the load generated through a node.
+        Start a thread for each node in the cluster that dispatches the load generated through a node.
         """
 
         for node in self.nodes:
@@ -124,7 +124,7 @@ class Cluster:
 
     def __start_load(self, node):
         """
-        Starts a python scheduler that runs periodically according to self.period. When running, the scheduler starts a
+        Start a python scheduler that runs periodically according to self.period. When running, the scheduler starts a
         new thread that get the load from the node and calls the method that sends the load.
         """
 
@@ -138,7 +138,7 @@ class Cluster:
 
     def __send_load(self, metrics):
         """
-        Starts a thread that calls the client's send method to send the metrics down the pipeline.
+        Start a thread that calls the client's send method to send the metrics down the pipeline.
         """
 
         try:
