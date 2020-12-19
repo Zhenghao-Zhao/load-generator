@@ -1,0 +1,27 @@
+{
+  "clusters": [
+    {
+      "id": 0,
+      "schema": 5,
+      "table": 5,
+      "metrics": {
+        "availableBlocks": "(0 ~ 1)",
+        "freeInodes": "(1 ~ 2)",
+        "availableInodes": "(2 ~ 3)",
+        "freeBlocks": "(> 0 (10 ~ 11))",
+        "blockSize": "(> 0 (100 ~ 101))",
+        "totalInodes": "(> 0 (200 ~ 201))",
+        "totalBlocks": "(> 1000 (300 ~ 301))"
+      },
+      "nodes": [
+        {
+          "id": 0,
+          "count": 1,
+          "additional_metrics": {
+            "whatever": "(0 ~ 1)"
+          }
+        }
+      ]
+    }
+  ]
+}
